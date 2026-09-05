@@ -361,6 +361,14 @@ pub trait GuestMemoryBackend {
 
     /// Check whether the range [base, base + len) is valid.
     fn check_range(&self, base: GuestAddress, len: usize) -> bool {
+        if len == 0 {
+            return true;
+        }
+
+        if self.get_slice(base, len).is_ok() {
+            return true;
+        }
+
         // get_slices() ensures that if no error happens, the cumulative length of all slices
         // equal `len`.
         self.get_slices(base, len).all(|r| r.is_ok())
@@ -592,12 +600,24 @@ impl<T: GuestMemory + ?Sized> Bytes<GuestAddress> for T {
     type E = Error;
 
     fn write(&self, buf: &[u8], addr: GuestAddress) -> Result<usize> {
+        if let Some(memory) = self.physical_memory() {
+            if let Ok(slice) = memory.get_slice(addr, buf.len()) {
+                return slice.write(buf, 0).map_err(Into::into);
+            }
+        }
+
         self.get_slices(addr, buf.len(), Permissions::Write)?
             .stop_on_error()?
             .try_fold(0, |acc, slice| Ok(acc + slice.write(&buf[acc..], 0)?))
     }
 
     fn read(&self, buf: &mut [u8], addr: GuestAddress) -> Result<usize> {
+        if let Some(memory) = self.physical_memory() {
+            if let Ok(slice) = memory.get_slice(addr, buf.len()) {
+                return slice.read(buf, 0).map_err(Into::into);
+            }
+        }
+
         self.get_slices(addr, buf.len(), Permissions::Read)?
             .stop_on_error()?
             .try_fold(0, |acc, slice| Ok(acc + slice.read(&mut buf[acc..], 0)?))
