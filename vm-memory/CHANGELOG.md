@@ -1,5 +1,12 @@
 # Changelog
 
+## Upcoming Release
+
+### Changed
+
+- Add fast paths for guest-memory reads, writes, and range checks that fit
+  within a single memory region.
+
 ## 0.18.0
 
 ### Changed
