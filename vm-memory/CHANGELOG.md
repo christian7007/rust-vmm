@@ -4,8 +4,9 @@
 
 ### Changed
 
-- Add fast paths for guest-memory reads, writes, and range checks that fit
-  within a single memory region.
+- \[[#132](https://github.com/rust-vmm/rust-vmm/pull/132)\] Add fast paths for
+  guest-memory reads, writes, and range checks that fit within a single memory
+  region.
 
 ## 0.18.0
 
