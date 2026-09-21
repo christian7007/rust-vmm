@@ -5,6 +5,8 @@ repository = "https://github.com/rust-vmm/rust-vmm"
 members = [
   "acpi_tables",
   "event-manager",
+  "kvm/kvm-bindings",
+  "kvm/kvm-ioctls",
   "linux-loader",
   "seccompiler",
   "vm-allocator",
