@@ -7,3 +7,5 @@ Cargo.lock
 .kernel
 .DS_Store
 kcov_output
+**/.pytest_cache/
+**/__pycache__/*
