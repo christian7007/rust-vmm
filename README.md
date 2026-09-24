@@ -37,6 +37,8 @@ rust-vmm crates in the root organization [rust-vmm](https://github.com/rust-vmm)
 - [acpi_tables](acpi_tables): Infrastructure for creating dynamic (via AML) and
   static ACPI tables.
 - [event-manager](event-manager): Abstractions for implementing event based systems.
+- [kvm-bindings](kvm/kvm-bindings): Rust FFI bindings to KVM.
+- [kvm-ioctls](kvm/kvm-ioctls): Safe wrappers over the KVM API.
 - [linux-loader](linux-loader): Linux kernel image loading crate.
 - [vm-allocator](vm-allocator): Allocation and release strategies for the
   resources a VMM needs, such as MMIO/PIO addresses, GSI numbers and device IDs.
